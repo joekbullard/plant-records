@@ -1,0 +1,43 @@
+FROM ghcr.io/osgeo/gdal:ubuntu-small-3.10.0 AS gdal-base
+
+# Set environment variables
+ENV UV_PROJECT_ENVIRONMENT="/venv"
+ENV UV_PYTHON_INSTALL_DIR="/python"
+ENV UV_COMPILE_BYTECODE=1
+ENV UV_PYTHON=python3.12
+ENV PATH="$UV_PROJECT_ENVIRONMENT/bin:$PATH"
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+wget \
+curl \
+&& wget -qO- https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz \
+| tar -xzv -C /usr/local/bin
+
+RUN mkdir -p $UV_PYTHON_INSTALL_DIR $UV_PROJECT_ENVIRONMENT
+
+FROM gdal-base AS python-base 
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+COPY pyproject.toml ./
+COPY uv.lock ./
+
+RUN uv sync --frozen --no-dev --no-install-project
+
+FROM python-base AS builder-base
+
+WORKDIR /app
+
+COPY . /app
+
+RUN python manage.py collectstatic --no-input
+
+
+FROM gdal-base AS webapp
+
+COPY --from=builder-base $UV_PYTHON_INSTALL_DIR $UV_PYTHON_INSTALL_DIR
+COPY --from=builder-base $UV_PROJECT_ENVIRONMENT $UV_PROJECT_ENVIRONMENT
+COPY --from=builder-base /app /app
+
+WORKDIR /app
+EXPOSE 8000
+CMD ["/bin/sh", "entrypoint.sh"]

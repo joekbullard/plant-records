@@ -11,3 +11,4 @@ wheels/
 
 # django
 db.sqlite3
+.env

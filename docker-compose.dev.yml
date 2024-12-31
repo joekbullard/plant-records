@@ -1,0 +1,34 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    #command: tail -f /dev/null 
+    volumes:
+      - .:/home/appuser/app
+    env_file:
+      - ./.env
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: kartoza/postgis
+    restart: unless-stopped
+    shm_size: 64mb
+    env_file:
+      - ./.env  # Path to your .env file containing environment variables
+    ports:
+      - 5432:5432
+    volumes:
+      - postgis-data:/var/lib/postgresql
+    healthcheck:
+      # healthcheck to prevent web container failing at startup
+      test: "PGPASSWORD=${POSTGRES_PASSWORD} pg_isready -h 127.0.0.1 -U ${POSTGRES_USER} -d ${POSTGRES_DB}"
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgis-data:

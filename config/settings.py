@@ -11,10 +11,20 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+POSTGRES_USER = os.getenv("POSTGRES_USER")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "default_password")  # Default if not set
+POSTGRES_DB = os.getenv("POSTGRES_DB")
+POSTGRES_PORT = os.getenv("POSTGRES_PORT")
+POSTGRES_HOST = os.getenv("POSTGRES_HOST")
+
+SU_USERNAME = os.getenv("DJANGO_SUPERUSER_USERNAME")
+SU_EMAIL = os.getenv("DJANGO_SUPERUSER_EMAIL")
+SU_PASSWORD = os.getenv("DJANGO_SUPERUSER_PASSWORD")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -25,7 +35,7 @@ SECRET_KEY = 'django-insecure-_&6&64$2ywc*az4-2ku2j9*f&urk-zqkka&cxk^&3lt+8dq&$$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,14 +47,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django.contrib.gis",
 
     # local
     "accounts",
+    "plantblog",
 
     # 3rd party
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "taggit",
+    "markdownx"
 ]
 
 MIDDLEWARE = [
@@ -84,8 +98,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
+        'NAME': POSTGRES_DB,
+        "USER": POSTGRES_USER,
+        "PASSWORD": POSTGRES_PASSWORD,
+        "PORT": POSTGRES_PORT,
+        "HOST": POSTGRES_HOST
     }
 }
 
@@ -144,9 +162,13 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "home"
 
 STATIC_URL = 'static/'
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+TAGGIT_CASE_INSENSITIVE = True

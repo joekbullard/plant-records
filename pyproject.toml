@@ -8,6 +8,9 @@ dependencies = [
     "django>=5.1.4",
     "django-allauth>=65.3.1",
     "django-htmx>=1.21.0",
+    "django-markdownx>=4.0.7",
+    "django-taggit>=6.1.0",
+    "psycopg>=3.2.3",
 ]
 
 [dependency-groups]
