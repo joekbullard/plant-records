@@ -10,4 +10,4 @@ wheels/
 .venv
 
 # django
-sqlite3.db
+db.sqlite3
