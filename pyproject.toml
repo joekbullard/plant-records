@@ -1,0 +1,16 @@
+[project]
+name = "a-plant-a-day"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django>=5.1.4",
+    "django-htmx>=1.21.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest-django>=4.9.0",
+    "ruff>=0.8.4",
+]
