@@ -1,6 +1,7 @@
 from django.contrib.gis.db import models
 from taggit.managers import TaggableManager
 from markdownx.models import MarkdownxField
+from markdownx.utils import markdownify
 
 class Species(models.Model):
 
@@ -44,6 +45,10 @@ class Entry(models.Model):
     publish_date = models.DateField()
     edit_date = models.DateTimeField(auto_now=True)
     tags = TaggableManager()
+
+    @property
+    def formatted_markdown(self):
+        return markdownify(self.body)
 
     def save(self, *args, **kwargs):
         if not self.day_number:

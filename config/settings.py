@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from plantblog.extensions import TailwindExtension
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -58,7 +59,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "taggit",
-    "markdownx"
+    "markdownx",
 ]
 
 MIDDLEWARE = [
@@ -164,6 +165,10 @@ STATIC_URL = 'static/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -172,3 +177,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "accounts.CustomUser"
 
 TAGGIT_CASE_INSENSITIVE = True
+
+MARKDOWNX_MARKDOWN_EXTENSIONS = ['markdown.extensions.fenced_code', TailwindExtension()]

@@ -12,3 +12,8 @@ wheels/
 # django
 db.sqlite3
 .env
+
+node_modules/
+output.css
+
+staticfiles/

@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from plantblog.views import AboutView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', include('plantblog.urls')),
+    path('secure-admin-login/', admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path('markdownx/', include('markdownx.urls')),
+    path('about/', AboutView.as_view(), name="about")
 ]
