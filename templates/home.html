@@ -1,15 +1,16 @@
 {% extends "base.html" %} {% block content %}
-<div class="flex flex-col md:gap-x-8 md:flex-row">
+<div class="flex flex-col md:gap-x-16 gap-y-16 md:flex-row">
   <div class="md:basis-2/3">
     {% for entry in entries %}
-    
-    <h2 class="text-2xl pb-2">{{ entry }} {{ entry.publish_date }}</h2>
-    {% lorem 60 w %}
-    <p>{{ entry.formatted_markdown|safe }} </p>
+    <div class="bg-pale-white h-80 text-black p-4 rounded-md shadow-md">
+      <h2 class="text-2xl pb-2">{{ entry }} {{ entry.publish_date }}</h2>
+      {% lorem 60 w %}
+      <p>{{ entry.formatted_markdown|safe }}</p>
+    </div>
     {% endfor %}
   </div>
 
-  <div class="md:basis-1/3">
+  <div class="md:basis-1/3 min-h-screen bg-pale-white rounded-md shadow-md">
     <p>More content</p>
   </div>
 </div>
