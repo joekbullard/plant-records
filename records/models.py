@@ -2,6 +2,7 @@ from django.contrib.gis.db import models
 from plantblog.constants import OS_GRID_PREFIXES
 from django.contrib.gis.geos import Polygon
 from django.urls import reverse
+from django.utils.timezone import now
 import datetime
 import json
 
@@ -109,7 +110,7 @@ class Abundance(models.IntegerChoices):
 
 class Record(models.Model):
     species = models.ForeignKey(Species, related_name="records", on_delete=models.CASCADE)
-    record_data = models.DateField(default=datetime.date.today())
+    record_data = models.DateField(default=now)
     sensitive = models.BooleanField(default=False)
     osgrid = models.ForeignKey(GridSquare, related_name="records", on_delete=models.CASCADE)
     abundance = models.SmallIntegerField(choices=Abundance.choices, default=Abundance.INDIVIDUAL)
