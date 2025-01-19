@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     # local
     "accounts",
     "plantblog",
+    "records",
 
     # 3rd party
     "allauth",
@@ -182,3 +183,7 @@ TAGGIT_CASE_INSENSITIVE = True
 MARKDOWNX_MARKDOWN_EXTENSIONS = ['markdown.extensions.fenced_code', TailwindExtension()]
 
 FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
+MEDIA_URL = 'media/'
