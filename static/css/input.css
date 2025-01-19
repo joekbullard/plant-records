@@ -3,3 +3,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer base {
+    @font-face {
+      font-family: 'custom';
+      font-weight: 400;
+      src: url(/static/fonts/Lenar-e924p.otf) format("opentype");
+    }
+}

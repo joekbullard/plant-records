@@ -1,0 +1,17 @@
+{% for entry in entries %}
+<div id="post-card" class="bg-yellow-50 hover:shadow-lg hover:scale-105 ease-in-out transition duration-200 flex h-48 rounded-md">
+  <a href="{% url 'entry_detail' entry.pk %}" class="">
+    <div class="p-4 flex flex-col">
+      <h2 class="text-4xl font-extrabold pb-2">
+        {{ entry }} - {{ entry.grid_square }}
+      </h2>
+      <div class="text-xl mb-2 h-20 line-clamp-3">
+        {{ entry.formatted_markdown|truncatewords:100|safe }}
+      </div>
+      <p class="text-sm">
+        <i>{{ entry.publish_date|date:"F j, Y" }}</i> - {{ entry.body|wordcount}} words - me
+      </p>
+    </div>
+  </a>
+</div>
+{% endfor %}

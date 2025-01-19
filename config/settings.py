@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "django.contrib.gis",
+    "django.forms",
 
     # local
     "accounts",
@@ -179,3 +180,5 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 TAGGIT_CASE_INSENSITIVE = True
 
 MARKDOWNX_MARKDOWN_EXTENSIONS = ['markdown.extensions.fenced_code', TailwindExtension()]
+
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'

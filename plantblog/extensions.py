@@ -15,7 +15,7 @@ class TailwindTreeProcessor(Treeprocessor):
 
     classes = {
         "a": "underline text-blue-700 hover:text-blue-500",
-        "p": "pb-4 text-lg",
+        "p": "pb-4 text-base",
     }
 
     def run(self, root):

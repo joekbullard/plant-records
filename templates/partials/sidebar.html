@@ -1,0 +1,13 @@
+{% load static %}
+<div>
+  <h2 class="p-4 text-xl font-bold">About</p>
+    <div class="avatar">
+      <div class="w-24 rounded-full">
+        <img src="{% static 'img/hokusai.jpg' %}" />
+      </div>
+    </div>
+  <p>Tags</p>
+  {% for tag in tags %}
+  <div class="badge badge-neutral"><a href="{% url 'entries_by_tag' tag.slug %}">{{ tag.name }}</a></div>
+  {% endfor %}
+</div>

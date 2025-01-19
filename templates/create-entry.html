@@ -1,0 +1,32 @@
+{% extends "base.html" %} {% block content %}
+<div class="text-lg w-full">
+  <form action="" method="post" method="post">
+    {% csrf_token %}
+    <div class="grid md:grid-cols-2 gap-4 pb-8">
+      <div class="fieldWrapper">
+        {{ form.grid_ref.errors }}
+        <label class="form-control" for="{{ form.grid_ref.id_for_label }}">Grid ref</label>
+        {{ form.grid_ref }}
+      </div>
+      <div class="fieldWrapper">
+        {{ form.publish_date.errors }}
+        <label class="form-control" for="{{ form.publish_date.id_for_label }}">Publish date</label>
+        {{ form.publish_date }}
+      </div>
+      <div class="fieldWrapper">
+        {{ form.species.errors }}
+        <label class="form-control" for="{{ form.species.id_for_label }}">Species</label>
+        {{ form.species }}
+      </div>
+      <div class="fieldWrapper">
+        {{ form.tags.errors }}
+        <label class="form-control" for="{{ form.tags.id_for_label }}">Tags</label>
+        {{ form.tags }}
+      </div>
+    </div>
+    {{ form.body }}
+    <button type="submit" class="btn">Submit</button>
+  </form>
+  {{ form.media }}
+</div>
+{% endblock %}
